@@ -121,7 +121,7 @@ public class Player : MonoBehaviour
 
     private void debugInventoryContents()
     {
-        string ret = "Inventory contains: \n"
+        string ret = "Inventory contains: \n";
         for (int i = 0; i < inventory.Length; i++)
         {
             if (inventory[i])
