@@ -112,9 +112,9 @@ public class Player : MonoBehaviour
             if (inventory[i])
             {
                 if (i == selectedPickup)
-                    inventory[i].enabled = true;
+                    inventory[i].gameObject.SetActive(true);
                 else
-                    inventory[i].enabled = false;
+                    inventory[i].gameObject.SetActive(false);
             }
         }
     }
