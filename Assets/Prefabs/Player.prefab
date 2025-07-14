@@ -47,7 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveAction: {fileID: 8609099268870104331, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   interactAction: {fileID: -2490670010820227104, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  movementSpeed: 10
+  sprintAction: {fileID: 9172334520457121645, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  movementSpeed: 3.5
+  sprintMultiplier: 1.75
 --- !u!1 &4500544597470610967
 GameObject:
   m_ObjectHideFlags: 0
