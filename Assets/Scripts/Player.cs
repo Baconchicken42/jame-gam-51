@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using DG.Tweening;
 using UnityEngine.InputSystem.Controls;
 
-[RequireComponent(typeof(Outline))]
+
 public class Player : MonoBehaviour
 {
     public InputActionReference moveAction;
