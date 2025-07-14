@@ -9,17 +9,20 @@ public class Interactible : MonoBehaviour
 
 
     private Outline[] outlines;
+    protected Player player;
 
 
     private void Start()
     {
         outlines = GetComponentsInChildren<Outline>();
         removeHighlight();
+
+        player = GameObject.FindWithTag("player").GetComponent<Player>();
     }
 
-    public void interact()
+    public virtual void interact()
     {
-        Debug.Log(name + " activated!");
+        Debug.Log(name + " interacted!");
         onInteracted.Invoke();
     }
 
