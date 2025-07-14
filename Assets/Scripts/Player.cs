@@ -8,8 +8,12 @@ public class Player : MonoBehaviour
     public InputActionReference interactAction;
     public InputActionReference sprintAction;
 
+    public GameObject playerModel;
+
     public float movementSpeed = 10.0f;
     public float sprintMultiplier = 1.75f;
+    [Range(0, 1)]
+    public float rotationStep = .1f; 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,6 +28,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         Vector2 moveAxis = (sprintAction.action.IsPressed()) ? moveAction.action.ReadValue<Vector2>() * sprintMultiplier : moveAction.action.ReadValue<Vector2>();
-        transform.position += new Vector3(moveAxis.x, 0, moveAxis.y) * movementSpeed * sprintMultiplier * Time.deltaTime;
+        Vector3 moveDir = new Vector3(moveAxis.x, 0, moveAxis.y);
+        transform.position += moveDir * movementSpeed * sprintMultiplier * Time.deltaTime;
+        if (moveDir != Vector3.zero)
+            playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, Quaternion.LookRotation(moveDir), rotationStep);
+
     }
 }
