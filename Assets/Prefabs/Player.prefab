@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b305108b8ed7d49b4bb666d4846b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveAction: {fileID: 8609099268870104331, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  interactAction: {fileID: -2490670010820227104, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  movementSpeed: 10
 --- !u!1 &4500544597470610967
 GameObject:
   m_ObjectHideFlags: 0
