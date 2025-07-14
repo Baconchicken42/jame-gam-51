@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using DG.Tweening;
 using UnityEngine.InputSystem.Controls;
 
+[RequireComponent(typeof(Outline))]
 public class Player : MonoBehaviour
 {
     public InputActionReference moveAction;
@@ -46,9 +47,12 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(ray, out rayHit, interactRange) && rayHit.transform != null)
         {
             interactibleInRange = rayHit.transform.gameObject.GetComponent<Interactible>(); //not sure if this works with something that extends
+            interactibleInRange.applyHighlight();
         }
         else
         {
+            if (interactibleInRange)
+                interactibleInRange.removeHighlight();
             interactibleInRange = null;
         }
 

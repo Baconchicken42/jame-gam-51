@@ -1,11 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Interactible : MonoBehaviour
 {
     public UnityEvent onInteracted;
-    public Material highlightMaterial;
 
+
+    private Outline[] outlines;
+
+
+    private void Start()
+    {
+        outlines = GetComponentsInChildren<Outline>();
+        removeHighlight();
+    }
 
     public void interact()
     {
@@ -15,11 +24,17 @@ public class Interactible : MonoBehaviour
 
     public void applyHighlight()
     {
-        //TODO: apply outline shader to all children
+        foreach (Outline ol in outlines)
+        {
+            ol.enabled = true;
+        }
     }
 
     public void removeHighlight()
     {
-        //TODO: remove outline shader from all children
+        foreach (Outline ol in outlines)
+        {
+            ol.enabled = false;
+        }
     }
 }
