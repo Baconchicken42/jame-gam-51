@@ -131,7 +131,8 @@ public class Player : MonoBehaviour
         else
         {
             Sequence dropSequence = DOTween.Sequence();
-            Vector3 pointInfront = transform.TransformPoint(playerModel.transform.localPosition + new Vector3(0, 0, interactRange));
+            Vector3 pointInfront = playerModel.transform.TransformPoint(playerModel.transform.localPosition + new Vector3(0, 0, interactRange));
+            Debug.DrawLine(transform.position, pointInfront, Color.red, 30);
             dropSequence.Append(currentPickup.transform.DOMove( pointInfront, pickupAnimDuration / 2f));
 
             //Get floor position in front
