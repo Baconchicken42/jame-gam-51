@@ -67,9 +67,12 @@ public class Player : MonoBehaviour
             interactibleInRange = null;
         }
 
-        if (interactAction.action.WasPressedThisFrame() && interactibleInRange != null)
+        if (interactAction.action.WasPressedThisFrame())
         {
-            interactibleInRange.interact();
+            if (interactibleInRange)
+                interactibleInRange.interact();
+            else
+                dropPickup();
         }
     }
 
@@ -83,7 +86,7 @@ public class Player : MonoBehaviour
         }
 
         pickup.gameObject.transform.SetParent(pickupAnchor);
-        pickup.transform.DOMove(pickupAnchor.position, pickupAnimDuration);
+        pickup.transform.DOLocalMove(pickupAnchor.localPosition, pickupAnimDuration);
         pickup.onPickedUp.Invoke();
 
         inventory[slot] = pickup;
@@ -92,6 +95,65 @@ public class Player : MonoBehaviour
 
         Debug.Log("grabbed " + pickup.name);
         debugInventoryContents();
+    }
+
+    public void dropPickup()
+    {
+        if (!inventory[selectedPickup])
+        {
+            Debug.Log("Nothing to drop!");
+            return;
+        }
+
+        Pickup currentPickup = inventory[selectedPickup];
+
+        //check if there's something in front of the player before dropping
+        RaycastHit rayHit;
+        Ray ray = new Ray(transform.position, playerModel.transform.forward);
+
+
+        currentPickup.transform.SetParent(null);
+
+        LayerMask layerMask = LayerMask.GetMask("Floor");
+
+        
+
+        //if there's something in front of the player, drop straight to the floor, otherwise move pickup forward and then drop
+        if (Physics.Raycast(ray, out rayHit, interactRange + .6f) && rayHit.transform != null)
+        {
+            //Get floor position
+            RaycastHit rayHitFloor;
+            Ray rayFloor = new Ray(currentPickup.transform.position, currentPickup.transform.up * -1);
+            Physics.Raycast(rayFloor, out rayHitFloor, 1000, layerMask);
+
+            currentPickup.transform.DOMove(rayHitFloor.point, pickupAnimDuration);
+        }
+        else
+        {
+            Sequence dropSequence = DOTween.Sequence();
+            Vector3 pointInfront = transform.TransformPoint(playerModel.transform.localPosition + new Vector3(0, 0, interactRange));
+            dropSequence.Append(currentPickup.transform.DOMove( pointInfront, pickupAnimDuration / 2f));
+
+            //Get floor position in front
+            RaycastHit rayHitFloor;
+            Ray rayFloor = new Ray(pointInfront, currentPickup.transform.up * -100);
+            Physics.Raycast(rayFloor, out rayHitFloor, 1000, layerMask);
+
+            //Debug.Log(rayHitFloor.);
+            dropSequence.Append(currentPickup.transform.DOMove(rayHitFloor.point, pickupAnimDuration / 2f));
+            dropSequence.Play();
+        }
+
+        currentPickup.removeHighlight();
+        currentPickup.onDropped.Invoke();
+
+        //clean up inventory
+        inventory[selectedPickup] = null;
+
+        //TODO: set up functionality for switching selected pickup manually and call one of those functions here
+        if (selectedPickup > 0)
+            selectedPickup -= 1;
+        displaySelectedPickup();
     }
 
     private int getFirstEmptyInventorySlot()
