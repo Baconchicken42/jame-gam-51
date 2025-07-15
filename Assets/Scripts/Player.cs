@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public InputActionReference moveAction;
     public InputActionReference interactAction;
     public InputActionReference sprintAction;
+    public InputActionReference moveSelectionAction;
 
     public GameObject playerModel;
     public Transform pickupAnchor;
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
         moveAction.action.Enable();
         interactAction.action.Enable();
         sprintAction.action.Enable();
+        moveSelectionAction.action.Enable();
 
         inventory = new Pickup[inventorySize];
     }
@@ -49,6 +51,19 @@ public class Player : MonoBehaviour
         //rotate player in movement direction
         if (moveDir != Vector3.zero)
             playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, Quaternion.LookRotation(moveDir), rotationStep);
+
+
+        //handle inventory selection
+        if (moveSelectionAction.action.WasPerformedThisFrame())
+        {
+            Debug.Log("Adjusting selected inventory item...");
+            float value = Mathf.Sign(moveSelectionAction.action.ReadValue<float>());
+
+            if (value < 0)
+                moveSelectionRight();
+            else if (value > 0)
+                moveSelectionLeft();
+        }
 
 
         //handle interaction
@@ -151,9 +166,6 @@ public class Player : MonoBehaviour
         //clean up inventory
         inventory[selectedPickup] = null;
 
-        //TODO: set up functionality for switching selected pickup manually and call one of those functions here
-        if (selectedPickup > 0)
-            selectedPickup -= 1;
         displaySelectedPickup();
     }
 
@@ -166,6 +178,26 @@ public class Player : MonoBehaviour
         }
 
         return -1;
+    }
+
+    private void moveSelectionRight()
+    {
+        if (selectedPickup == inventory.Length - 1)
+            selectedPickup = 0;
+        else
+            selectedPickup++;
+
+        displaySelectedPickup();
+    }
+
+    private void moveSelectionLeft()
+    {
+        if (selectedPickup == 0)
+            selectedPickup = inventory.Length - 1;
+        else
+            selectedPickup--;
+
+        displaySelectedPickup();
     }
 
     private void displaySelectedPickup()
