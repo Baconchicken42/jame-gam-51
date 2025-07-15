@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
 
             //Get floor position in front
             RaycastHit rayHitFloor;
-            Ray rayFloor = new Ray(pointInfront, currentPickup.transform.up * -100);
+            Ray rayFloor = new Ray(pointInfront, currentPickup.transform.up * -1);
             Physics.Raycast(rayFloor, out rayHitFloor, 1000, layerMask);
 
             //Debug.Log(rayHitFloor.);
