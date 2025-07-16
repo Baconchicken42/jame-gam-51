@@ -221,20 +221,21 @@ public class Player : MonoBehaviour
         return inventory[selectedPickup];
     }
 
-    public Document releaseHeldDocument()
+    public Pickup releaseHeldPickup()
     {
-        Document ret;
-        inventory[selectedPickup].TryGetComponent<Document>(out ret);
 
-        if (ret)
+        if (inventory[selectedPickup])
         {
+            Pickup ret;
+
+            ret = inventory[selectedPickup];
             inventory[selectedPickup] = null;
             displaySelectedPickup();
             return ret;
         }
         else
         {
-            Debug.Log("Either nothing is being held or the currently held pickup is not a document");
+            Debug.Log("Nothing is currently being held.");
             return null;
         }
 

@@ -8,8 +8,9 @@ public class Printer : Interactible
 
     public Transform documentAnchor;
 
-    [Range(0, 100)]
+    [Range(0,100)]
     public int inkRemaining = 100;
+    [Range(0,50)]
     public int paperRemaining = 50;
     public float inkTickRateSeconds = 1f;
     public float paperTickRateSeconds = 5f;
@@ -24,26 +25,48 @@ public class Printer : Interactible
         base.interact();
 
 
-        //check if the player is holding something, if not try to give them the current document.
+
+        Document heldDoc = null;
+        Ink heldInk = null;
+        Paper heldPaper = null;
+
         Pickup playerPickup = player.getSelectedPickup();
-        if (!playerPickup)
+        if (playerPickup)
         {
-            releaseCurrentDocument();
-            return;
+            heldDoc = playerPickup.GetComponent<Document>();
+            heldInk = playerPickup.GetComponent<Ink>();
+            heldPaper = playerPickup.GetComponent<Paper>();
         }
 
+        
+
         //if they are holding something, start figuring out what it is.
-        if (playerPickup.GetComponent<Document>()) //maybe change this to tags instead of using getcomponent?
+        if (heldDoc) //maybe change this to tags instead of using getcomponent?
         {
             if (!currentDocument)
             {
-                currentDocument = player.releaseHeldDocument();
+                currentDocument = player.releaseHeldPickup().GetComponent<Document>();
                 currentDocument.transform.SetParent(documentAnchor);
                 currentDocument.transform.DOLocalMove(documentAnchor.localPosition, player.pickupAnimDuration);
                 currentDocument.transform.DOLocalRotate(documentAnchor.localEulerAngles, player.pickupAnimDuration);
+                return;
             }
         }
-        //TODO: Check for pickups like ink and paper and handle them appropriately
+        else if (heldInk)
+        {
+            inkRemaining += heldInk.inkAmount;
+            Destroy(player.releaseHeldPickup());
+            return;
+        }
+        else if (heldPaper)
+        {
+            paperRemaining += heldPaper.paperAmount;
+            Destroy(player.releaseHeldPickup());
+            return;
+        }
+
+        releaseCurrentDocument();
+        //The way that was structured should make sure that if the player is holding a document they can still pick up the one in the printer
     }
 
     private void Update()
