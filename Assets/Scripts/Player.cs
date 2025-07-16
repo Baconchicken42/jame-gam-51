@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public InputActionReference moveAction;
     public InputActionReference interactAction;
     public InputActionReference sprintAction;
+    public InputActionReference moveSelectionAction;
 
     public GameObject playerModel;
     public Transform pickupAnchor;
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
         moveAction.action.Enable();
         interactAction.action.Enable();
         sprintAction.action.Enable();
+        moveSelectionAction.action.Enable();
 
         inventory = new Pickup[inventorySize];
     }
@@ -51,12 +53,25 @@ public class Player : MonoBehaviour
             playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, Quaternion.LookRotation(moveDir), rotationStep);
 
 
+        //handle inventory selection
+        if (moveSelectionAction.action.WasPerformedThisFrame())
+        {
+            Debug.Log("Adjusting selected inventory item...");
+            float value = Mathf.Sign(moveSelectionAction.action.ReadValue<float>());
+
+            if (value < 0)
+                moveSelectionRight();
+            else if (value > 0)
+                moveSelectionLeft();
+        }
+
+
         //handle interaction
         RaycastHit rayHit;
         Ray ray = new Ray(transform.position, playerModel.transform.forward);
         if (Physics.Raycast(ray, out rayHit, interactRange) && rayHit.transform != null)
         {
-            interactibleInRange = rayHit.transform.gameObject.GetComponent<Interactible>(); //not sure if this works with something that extends
+            interactibleInRange = rayHit.transform.gameObject.GetComponent<Interactible>();
             if (interactibleInRange)
                 interactibleInRange.applyHighlight();
         }
@@ -76,13 +91,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void grabPickup(Pickup pickup)
+    public bool grabPickup(Pickup pickup)
     {
         int slot = getFirstEmptyInventorySlot();
         if (slot == -1)
         {
             Debug.Log("Inventory Full, cannot grab pickup " + pickup.name);
-            return;
+            return false;
         }
 
         pickup.gameObject.transform.SetParent(pickupAnchor);
@@ -95,6 +110,8 @@ public class Player : MonoBehaviour
 
         Debug.Log("grabbed " + pickup.name);
         debugInventoryContents();
+
+        return true;
     }
 
     public void dropPickup()
@@ -137,7 +154,7 @@ public class Player : MonoBehaviour
 
             //Get floor position in front
             RaycastHit rayHitFloor;
-            Ray rayFloor = new Ray(pointInfront, currentPickup.transform.up * -100);
+            Ray rayFloor = new Ray(pointInfront, currentPickup.transform.up * -1);
             Physics.Raycast(rayFloor, out rayHitFloor, 1000, layerMask);
 
             //Debug.Log(rayHitFloor.);
@@ -151,9 +168,6 @@ public class Player : MonoBehaviour
         //clean up inventory
         inventory[selectedPickup] = null;
 
-        //TODO: set up functionality for switching selected pickup manually and call one of those functions here
-        if (selectedPickup > 0)
-            selectedPickup -= 1;
         displaySelectedPickup();
     }
 
@@ -168,6 +182,26 @@ public class Player : MonoBehaviour
         return -1;
     }
 
+    private void moveSelectionRight()
+    {
+        if (selectedPickup == inventory.Length - 1)
+            selectedPickup = 0;
+        else
+            selectedPickup++;
+
+        displaySelectedPickup();
+    }
+
+    private void moveSelectionLeft()
+    {
+        if (selectedPickup == 0)
+            selectedPickup = inventory.Length - 1;
+        else
+            selectedPickup--;
+
+        displaySelectedPickup();
+    }
+
     private void displaySelectedPickup()
     {
         for (int i = 0; i < inventory.Length; i++)
@@ -180,6 +214,31 @@ public class Player : MonoBehaviour
                     inventory[i].gameObject.SetActive(false);
             }
         }
+    }
+
+    public Pickup getSelectedPickup()
+    {
+        return inventory[selectedPickup];
+    }
+
+    public Pickup releaseHeldPickup()
+    {
+
+        if (inventory[selectedPickup])
+        {
+            Pickup ret;
+
+            ret = inventory[selectedPickup];
+            inventory[selectedPickup] = null;
+            displaySelectedPickup();
+            return ret;
+        }
+        else
+        {
+            Debug.Log("Nothing is currently being held.");
+            return null;
+        }
+
     }
 
     private void debugInventoryContents()
