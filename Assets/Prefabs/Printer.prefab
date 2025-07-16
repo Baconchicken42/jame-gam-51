@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4641985475829716461}
   - component: {fileID: 5046522468112152786}
   - component: {fileID: 7779789623341174197}
-  m_Layer: 0
+  - component: {fileID: 642123811545905076}
+  m_Layer: 3
   m_Name: Printer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -68,11 +69,35 @@ MonoBehaviour:
   onInteracted:
     m_PersistentCalls:
       m_Calls: []
+  onJobCompleted:
+    m_PersistentCalls:
+      m_Calls: []
   documentAnchor: {fileID: 7796434602807249492}
   inkRemaining: 100
   paperRemaining: 50
   inkTickRateSeconds: 1
   paperTickRateSeconds: 5
+--- !u!65 &642123811545905076
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4388433561176527291}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.2791073, z: 1}
+  m_Center: {x: 0, y: 0.36358714, z: 0}
 --- !u!1 &5390824886392834945
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +107,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7796434602807249492}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DocumentAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +142,7 @@ GameObject:
   - component: {fileID: 864005600008979975}
   - component: {fileID: 6407905397247192225}
   - component: {fileID: 419360735184749505}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TempModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +234,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
