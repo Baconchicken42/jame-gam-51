@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
         Ray ray = new Ray(transform.position, playerModel.transform.forward);
         if (Physics.Raycast(ray, out rayHit, interactRange) && rayHit.transform != null)
         {
-            interactibleInRange = rayHit.transform.gameObject.GetComponent<Interactible>(); //not sure if this works with something that extends
+            interactibleInRange = rayHit.transform.gameObject.GetComponent<Interactible>();
             if (interactibleInRange)
                 interactibleInRange.applyHighlight();
         }
@@ -91,13 +91,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void grabPickup(Pickup pickup)
+    public bool grabPickup(Pickup pickup)
     {
         int slot = getFirstEmptyInventorySlot();
         if (slot == -1)
         {
             Debug.Log("Inventory Full, cannot grab pickup " + pickup.name);
-            return;
+            return false;
         }
 
         pickup.gameObject.transform.SetParent(pickupAnchor);
@@ -110,6 +110,8 @@ public class Player : MonoBehaviour
 
         Debug.Log("grabbed " + pickup.name);
         debugInventoryContents();
+
+        return true;
     }
 
     public void dropPickup()
@@ -212,6 +214,30 @@ public class Player : MonoBehaviour
                     inventory[i].gameObject.SetActive(false);
             }
         }
+    }
+
+    public Pickup getSelectedPickup()
+    {
+        return inventory[selectedPickup];
+    }
+
+    public Document releaseHeldDocument()
+    {
+        Document ret;
+        inventory[selectedPickup].TryGetComponent<Document>(out ret);
+
+        if (ret)
+        {
+            inventory[selectedPickup] = null;
+            displaySelectedPickup();
+            return ret;
+        }
+        else
+        {
+            Debug.Log("Either nothing is being held or the currently held pickup is not a document");
+            return null;
+        }
+
     }
 
     private void debugInventoryContents()
