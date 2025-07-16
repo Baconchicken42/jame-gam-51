@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 7794845409827979128}
   - component: {fileID: 7498647380833185272}
   m_Layer: 3
-  m_Name: Cylinder
+  m_Name: TempModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

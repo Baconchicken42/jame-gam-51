@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class Paper : Pickup
 {
-    public int paperAmount;
+    public int paperAmount = 25;
 }
