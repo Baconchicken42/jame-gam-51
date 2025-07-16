@@ -55,13 +55,13 @@ public class Printer : Interactible
         else if (heldInk)
         {
             inkRemaining += heldInk.inkAmount;
-            Destroy(player.releaseHeldPickup());
+            Destroy(player.releaseHeldPickup().gameObject);
             return;
         }
         else if (heldPaper)
         {
             paperRemaining += heldPaper.paperAmount;
-            Destroy(player.releaseHeldPickup());
+            Destroy(player.releaseHeldPickup().gameObject);
             return;
         }
 
