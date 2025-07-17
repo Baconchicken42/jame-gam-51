@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineMode: 1
+  outlineColor: {r: 0, g: 0, b: 1, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -161,10 +161,14 @@ MonoBehaviour:
   onDropped:
     m_PersistentCalls:
       m_Calls: []
+  onCompleted:
+    m_PersistentCalls:
+      m_Calls: []
   copy: {fileID: 8293998483971816941}
   progress: 0
   type: 0
   color: 0
+  isCompleted: 0
 --- !u!65 &6098492563571690154
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -184,8 +188,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.44920164, y: 0.09974411, z: 0.45010054}
-  m_Center: {x: 0.000530988, y: 0.0563834, z: -0.0020386279}
+  m_Size: {x: 0.44920164, y: 0.47061622, z: 0.45010054}
+  m_Center: {x: 0.000530988, y: 0.05533901, z: -0.0020386279}
 --- !u!1 &8293998483971816941
 GameObject:
   m_ObjectHideFlags: 0
