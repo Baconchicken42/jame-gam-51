@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6529340226396898006}
   - component: {fileID: 8892480514378477570}
   - component: {fileID: 7366061925510773777}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TempModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 4702898096851542912}
   - component: {fileID: 4795721294979183178}
   - component: {fileID: 5289442839629640052}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Paper
   m_TagString: Untagged
   m_Icon: {fileID: 0}

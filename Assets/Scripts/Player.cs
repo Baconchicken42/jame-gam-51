@@ -67,9 +67,13 @@ public class Player : MonoBehaviour
 
 
         //handle interaction
+
         RaycastHit rayHit;
-        Ray ray = new Ray(transform.position, playerModel.transform.forward);
-        if (Physics.Raycast(ray, out rayHit, interactRange) && rayHit.transform != null)
+        //Ray ray = new Ray(transform.position, playerModel.transform.forward);
+        //if (Physics.Raycast(ray, out rayHit, interactRange) && rayHit.transform != null)
+
+        LayerMask interactibleMask = LayerMask.GetMask("Interactible");
+        if (Physics.BoxCast(playerModel.transform.position, new Vector3(.5f,1,interactRange / 2), playerModel.transform.forward, out rayHit, playerModel.transform.rotation, interactRange, interactibleMask))
         {
             interactibleInRange = rayHit.transform.gameObject.GetComponent<Interactible>();
             if (interactibleInRange)
@@ -126,7 +130,7 @@ public class Player : MonoBehaviour
 
         //check if there's something in front of the player before dropping
         RaycastHit rayHit;
-        Ray ray = new Ray(transform.position, playerModel.transform.forward);
+        Ray ray = new Ray(playerModel.transform.position, playerModel.transform.forward);
 
 
         currentPickup.transform.SetParent(null);
