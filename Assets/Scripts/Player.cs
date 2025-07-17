@@ -197,6 +197,18 @@ public class Player : MonoBehaviour
         return -1;
     }
 
+    public bool isInventorySlotAvailable()
+    {
+        if (getFirstEmptyInventorySlot() == -1)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     private void moveSelectionRight()
     {
         if (selectedPickup == inventory.Length - 1)

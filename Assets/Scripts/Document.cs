@@ -20,7 +20,6 @@ public class Document : Pickup
     [HideInInspector]
     public bool isCompleted = false;
 
-
     public void complete()
     {
         copy.gameObject.SetActive(true);
