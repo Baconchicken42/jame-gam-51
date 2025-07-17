@@ -29,10 +29,15 @@ public class Employee : Interactible
             newDocComponentReference.color = requiredDocument.color;
 
             player.grabPickup(newDocComponentReference);
+            documentDispensed = true;
         }
         else if (requiredDocument && documentDispensed)
         {
-            Document heldDoc = player.getSelectedPickup().GetComponent<Document>();
+            Pickup heldPickup = player.getSelectedPickup();
+            Document heldDoc = null;
+            if (heldPickup)
+                heldDoc = heldPickup.GetComponent<Document>();
+                
             if (!heldDoc)
                 return;
 
