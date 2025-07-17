@@ -3,12 +3,7 @@ guid: 21f3e9e63a6b0a64d94cacbccffb341a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: TexturePalette
-    second: {fileID: 2100000, guid: fa921eee510b57e4db05753defe0e8dd, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -40,7 +35,7 @@ ModelImporter:
       takeName: Armature|Celebrating
       internalID: -1850419253679197467
       firstFrame: 0
-      lastFrame: 35
+      lastFrame: 34
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -98,7 +93,7 @@ ModelImporter:
       takeName: Armature|Interact
       internalID: -2328835098782832033
       firstFrame: 0
-      lastFrame: 34
+      lastFrame: 33
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -127,7 +122,7 @@ ModelImporter:
       takeName: Armature|Walking
       internalID: -4274770991410265338
       firstFrame: 0
-      lastFrame: 42
+      lastFrame: 41
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -156,7 +151,7 @@ ModelImporter:
       takeName: Armature|Waving
       internalID: 4829966686875344911
       firstFrame: 0
-      lastFrame: 60
+      lastFrame: 59
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -183,11 +178,11 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 3
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
-    sortHierarchyByName: 0
+    sortHierarchyByName: 1
     importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
@@ -201,7 +196,7 @@ ModelImporter:
     keepQuads: 0
     weldVertices: 1
     bakeAxisConversion: 0
-    preserveHierarchy: 1
+    preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
@@ -238,7 +233,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 3
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
