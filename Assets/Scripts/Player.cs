@@ -25,12 +25,12 @@ public class Player : MonoBehaviour
     public float pickupAnimDuration = .3f;
     public int inventorySize = 3;
 
-    private Interactible interactibleInRange = null;
+    //private Interactible interactibleInRange = null;
+    private Interactible focusedInteractible;
     private Pickup[] inventory;
     private int selectedPickup = 0;
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         moveAction.action.Enable();
@@ -41,7 +41,6 @@ public class Player : MonoBehaviour
         inventory = new Pickup[inventorySize];
     }
 
-    // Update is called once per frame
     void Update()
     {
         //handle movement
@@ -73,23 +72,35 @@ public class Player : MonoBehaviour
         //if (Physics.Raycast(ray, out rayHit, interactRange) && rayHit.transform != null)
 
         LayerMask interactibleMask = LayerMask.GetMask("Interactible");
-        if (Physics.BoxCast(playerModel.transform.position, new Vector3(.5f,1,interactRange / 2), playerModel.transform.forward, out rayHit, playerModel.transform.rotation, interactRange, interactibleMask))
+        if (Physics.BoxCast(playerModel.transform.position, new Vector3(.5f,1,.1f), playerModel.transform.forward, out rayHit, playerModel.transform.rotation, interactRange, interactibleMask))
         {
-            interactibleInRange = rayHit.transform.gameObject.GetComponent<Interactible>();
+            Interactible interactibleInRange = rayHit.transform.gameObject.GetComponent<Interactible>();
+
+            if (interactibleInRange != focusedInteractible)
+            {
+                if (focusedInteractible)
+                    focusedInteractible.removeHighlight();
+                focusedInteractible = null;
+            }
+
             if (interactibleInRange)
-                interactibleInRange.applyHighlight();
+            {
+                focusedInteractible = interactibleInRange;
+                focusedInteractible.applyHighlight();
+            }
+                
         }
         else
         {
-            if (interactibleInRange)
-                interactibleInRange.removeHighlight();
-            interactibleInRange = null;
+            if (focusedInteractible)
+                focusedInteractible.removeHighlight();
+            focusedInteractible = null;
         }
 
         if (interactAction.action.WasPressedThisFrame())
         {
-            if (interactibleInRange)
-                interactibleInRange.interact();
+            if (focusedInteractible)
+                focusedInteractible.interact();
             else
                 dropPickup();
         }
@@ -113,7 +124,7 @@ public class Player : MonoBehaviour
         displaySelectedPickup();
 
         Debug.Log("grabbed " + pickup.name);
-        debugInventoryContents();
+        //debugInventoryContents();
 
         return true;
     }
