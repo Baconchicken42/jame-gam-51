@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class Employee : Interactible
 {
@@ -52,6 +53,9 @@ public class Employee : Interactible
                 requiredDocument = null; //the order manager should be the one setting this
                 documentDispensed = false;
                 onOrderCompleted.Invoke();
+
+                float points = Random.Range(0, 12);
+                player.addPoints(points / 100f);
             }
         }
         
