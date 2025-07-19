@@ -3,23 +3,41 @@ using UnityEngine;
 
 public class OrderManager : MonoBehaviour
 {
-    public float timeLimit;
+    public float timeLimitSeconds = 180;
 
     [SerializeField]
     public Order[] orders;
 
     public Employee[] employees;
     private float timer = 0f;
+    private int ordersCompleted = 0;
 
 
     private void Start()
     {
         employees = FindObjectsByType<Employee>(FindObjectsSortMode.None);
+        for (int i = 0; i < employees.Length; i++)
+        {
+            employees[i].onOrderCompleted.AddListener(incrementOrdersCompleted);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        for (int i = 0; i < employees.Length; i++)
+        {
+            employees[i].onOrderCompleted.RemoveListener(incrementOrdersCompleted);
+        }
     }
 
     private void Update()
     {
         timer += Time.deltaTime;
+
+        if (timer >= timeLimitSeconds)
+        {
+            //end the game, display ui, etc
+        }
 
         //not gonna bother trying to avoid looping every frame, this game will not be very performance intensive and I don't want to require orders to be sorted and invite human error
         for (int j = 0; j < orders.Length; j++)
@@ -42,6 +60,11 @@ public class OrderManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void incrementOrdersCompleted()
+    {
+        ordersCompleted++;
     }
 
 }
