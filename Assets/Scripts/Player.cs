@@ -269,6 +269,11 @@ public class Player : MonoBehaviour
 
     }
 
+    public void addPoints(float p)
+    {
+        points += p;
+    }
+
     private void debugInventoryContents()
     {
         string ret = "Inventory contains: \n";

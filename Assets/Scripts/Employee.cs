@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -9,55 +10,86 @@ public class Employee : Interactible
 {
     public UnityEvent onOrderCompleted;
 
+
+    public GameObject documentPrefab;
     public Transform documentAnchor;
 
     public int id = 0;
-    public Document requiredDocument;
-    public GameObject documentPrefab;
+    //[HideInInspector]
+    public List<Order> orders;
 
-    private bool documentDispensed = false;
+    //private bool documentDispensed = false;
 
     public override void interact()
     {
         base.interact();
 
-        if (requiredDocument && !documentDispensed && player.isInventorySlotAvailable())
-        {
-            GameObject newDoc = Instantiate(documentPrefab, documentAnchor);
-            Document newDocComponentReference = newDoc.GetComponent<Document>(); //something about this feels like it won't work how I think
-            newDocComponentReference.timeRequired = requiredDocument.timeRequired;
-            newDocComponentReference.type = requiredDocument.type;
-            newDocComponentReference.color = requiredDocument.color;
+        Pickup heldPickup = player.getSelectedPickup();
+        Document heldDoc = null;
+        if (heldPickup)
+            heldDoc = heldPickup.GetComponent<Document>();
 
-            player.grabPickup(newDocComponentReference);
-            documentDispensed = true;
-        }
-        else if (requiredDocument && documentDispensed)
+        Order matchedOrder = null;
+        if (heldDoc)
         {
-            Pickup heldPickup = player.getSelectedPickup();
-            Document heldDoc = null;
-            if (heldPickup)
-                heldDoc = heldPickup.GetComponent<Document>();
-                
-            if (!heldDoc)
+            matchedOrder = getMatchingOrder(heldDoc);
+        }
+
+        if (matchedOrder != null && heldDoc.isCompleted) //at this point, the player is holding a completed document that matches one of the orders
+        {
+            player.releaseHeldPickup();
+            heldDoc.transform.SetParent(documentAnchor);
+            heldDoc.transform.DOLocalMove(documentAnchor.localPosition, player.pickupAnimDuration).OnComplete(() =>
+            {
+                Destroy(heldDoc.gameObject);
+            });
+            orders.Remove(matchedOrder);
+            //documentDispensed = false;
+            onOrderCompleted.Invoke();
+
+            float points = Random.Range(0, 12);
+            player.addPoints(points / 100f);
+        }
+        else if (orders.Count > 0 && player.isInventorySlotAvailable()) //if player doesn't have a valid doc, an order exists, and the player has room for it:
+        {
+            Order nextOrder = getFirstNonDispensedOrder();
+            if (nextOrder == null) //if all orders have been dispensed, do nothing
                 return;
 
-            if (heldDoc.isCompleted && heldDoc.type == requiredDocument.type && heldDoc.color == requiredDocument.color)
-            {
-                player.releaseHeldPickup();
-                heldDoc.transform.SetParent(documentAnchor);
-                heldDoc.transform.DOLocalMove(documentAnchor.localPosition, player.pickupAnimDuration).OnComplete(() =>
-                {
-                    Destroy(heldDoc.gameObject);
-                });
-                requiredDocument = null; //the order manager should be the one setting this
-                documentDispensed = false;
-                onOrderCompleted.Invoke();
+            GameObject newDoc = Instantiate(documentPrefab, documentAnchor);
+            Document newDocComponentReference = newDoc.GetComponent<Document>(); //something about this feels like it won't work how I think
+            newDocComponentReference.timeRequired = nextOrder.timeRequired;
+            newDocComponentReference.type = nextOrder.type;
+            newDocComponentReference.color = nextOrder.color;
 
-                float points = Random.Range(0, 12);
-                player.addPoints(points / 100f);
-            }
+            player.grabPickup(newDocComponentReference);
+            nextOrder.wasDispensed = true;
         }
         
+    }
+
+
+    public Order getMatchingOrder(Document doc)
+    {
+        foreach (Order o in orders)
+        {
+            if (o.color == doc.color && o.type == doc.type)
+            {
+                return o;
+            }
+        }
+
+        return null;
+    }
+
+    public Order getFirstNonDispensedOrder()
+    {
+        foreach (Order o in orders)
+        {
+            if (o.wasDispensed == false)
+                return o;
+        }
+
+        return null;
     }
 }
