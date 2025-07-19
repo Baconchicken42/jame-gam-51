@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     private Interactible focusedInteractible;
     private Pickup[] inventory;
     private int selectedPickup = 0;
+    private float points = 0f;
 
 
     void Start()
@@ -266,6 +267,11 @@ public class Player : MonoBehaviour
             return null;
         }
 
+    }
+
+    public void addPoints(float p)
+    {
+        points += p;
     }
 
     private void debugInventoryContents()

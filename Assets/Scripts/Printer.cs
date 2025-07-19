@@ -8,10 +8,10 @@ public class Printer : Interactible
 
     public Transform documentAnchor;
 
-    [Range(0,100)]
-    public int inkRemaining = 100;
-    [Range(0,50)]
-    public int paperRemaining = 50;
+    [Range(0,40)]
+    public int inkRemaining = 40;
+    [Range(0,10)]
+    public int paperRemaining = 10;
     public float inkTickRateSeconds = 1f;
     public float paperTickRateSeconds = 5f;
 
