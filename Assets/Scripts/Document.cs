@@ -36,6 +36,7 @@ public class Document : Pickup
     {
         copy.gameObject.SetActive(true);
         isCompleted = true;
+        icon = uiManager.getMatchingIcon(color, type, true);
 
         Debug.Log($"Document {name} has been completed!");
         onCompleted.Invoke();

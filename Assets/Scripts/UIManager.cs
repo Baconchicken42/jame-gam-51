@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     public Sprite[] documentIcons;
+    public Sprite[] documentIconsCompleted;
 
     public Image[] inventoryImgs;
 
@@ -21,7 +22,7 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public Sprite getMatchingIcon(documentColor color, documentType type)
+    public Sprite getMatchingIcon(documentColor color, documentType type, bool completed = false)
     {
         int colorIndex = 0;
         int shapeIncrement = 0;
@@ -62,8 +63,13 @@ public class UIManager : MonoBehaviour
 
         }
 
-        return documentIcons[colorIndex + shapeIncrement];
+        if (completed)
+            return documentIconsCompleted[colorIndex + shapeIncrement];
+        else
+            return documentIcons[colorIndex + shapeIncrement];
     }
+
+
 
     public void refreshInventoryUI()
     {
