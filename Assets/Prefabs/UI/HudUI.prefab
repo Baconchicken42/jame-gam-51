@@ -311,7 +311,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -442,7 +442,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3582699473745689163
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2657,7 +2657,9 @@ MonoBehaviour:
   - {fileID: 4150400607050378313}
   - {fileID: 4786424006097335492}
   - {fileID: 6150060766824503816}
-  gameEndPanel: {fileID: 0}
+  gameEndPanel: {fileID: 4274357379420241366}
+  ordersValueTxt: {fileID: 526090458488746904}
+  tipsValueTxt: {fileID: 5205503004221220281}
 --- !u!1 &8806213998753724307
 GameObject:
   m_ObjectHideFlags: 0

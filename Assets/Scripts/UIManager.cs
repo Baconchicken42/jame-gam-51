@@ -14,8 +14,8 @@ public class UIManager : MonoBehaviour
     public Image[] inventoryImgs;
 
     public GameObject gameEndPanel;
-    public TMPro.TextMeshPro ordersValueTxt;
-    public TMPro.TextMeshPro tipsValueTxt;
+    public TMPro.TextMeshProUGUI ordersValueTxt;
+    public TMPro.TextMeshProUGUI tipsValueTxt;
 
     private Player player;
 
