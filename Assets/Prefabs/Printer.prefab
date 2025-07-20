@@ -380,6 +380,7 @@ MonoBehaviour:
   paperRemaining: 10
   inkTickRateSeconds: 1
   paperTickRateSeconds: 5
+  uiCanvas: {fileID: 595133889203357245}
   inkImg: {fileID: 414392201446577384}
   inkWarning: {fileID: 3603963281492129550}
   inkEmpty: {fileID: 2622086109405613140}

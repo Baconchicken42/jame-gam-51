@@ -21,6 +21,8 @@ public class Printer : Interactible
 
 
     [Header("UI")]
+    //public Canvas uiCanvas;
+    //private Camera mainCamera;
     public Image inkImg;
     public Image inkWarning;
     public Image inkEmpty;
@@ -45,6 +47,8 @@ public class Printer : Interactible
         inkImg.transform.localScale = Vector3.zero;
         paperImg.transform.localScale = Vector3.zero;
         docImg.transform.localScale = Vector3.zero;
+
+        //mainCamera = FindAnyObjectByType<Camera>();
 
     }
 
@@ -130,10 +134,6 @@ public class Printer : Interactible
                     }
                 }
             }
-            else
-            {
-                //TODO: update UI to show that ink and/or paper are needed
-            }
 
         }
 
@@ -174,6 +174,8 @@ public class Printer : Interactible
             isPaperIconOut = false;
         }
 
+
+        //uiCanvas.transform.eulerAngles = Vector3.RotateTowards(uiCanvas.transform.eulerAngles, mainCamera.transform.position, 1, 0);
     }
 
     private void releaseCurrentDocument()
