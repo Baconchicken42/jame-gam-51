@@ -13,12 +13,19 @@ public class UIManager : MonoBehaviour
 
     public Image[] inventoryImgs;
 
+    public GameObject gameEndPanel;
+    public TMPro.TextMeshProUGUI ordersValueTxt;
+    public TMPro.TextMeshProUGUI tipsValueTxt;
+
     private Player player;
 
 
     private void Start()
     {
         player = (Player)FindAnyObjectByType(typeof(Player));
+
+        gameEndPanel.transform.localScale = Vector3.zero;
+        gameEndPanel.gameObject.SetActive(false);
     }
 
 
@@ -109,5 +116,14 @@ public class UIManager : MonoBehaviour
     public void refreshScoreUI()
     {
         score.text = player.points.ToString();
+    }
+
+    public void endLevelUI(int ordersCompleted)
+    {
+        gameEndPanel.SetActive(true);
+        ordersValueTxt.text = ordersCompleted.ToString();
+        tipsValueTxt.text = player.points.ToString();
+
+        gameEndPanel.transform.DOScale(Vector3.one, .5f);
     }
 }
