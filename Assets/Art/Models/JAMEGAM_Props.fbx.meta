@@ -1,19 +1,9 @@
 fileFormatVersion: 2
-guid: 6d77f2ee72ccf7d43a701251db4fedfc
+guid: 3650da7bd4f9bad4ba6b538e6bf0b75f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Logo
-    second: {fileID: 2100000, guid: f01b681d99888db42b7ba105d70bf19b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: TexturePalette
-    second: {fileID: 2100000, guid: 859ce6e5f5da22648946be4393e9f329, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
