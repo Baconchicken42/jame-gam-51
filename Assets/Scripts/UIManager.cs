@@ -1,11 +1,13 @@
 using DG.Tweening;
 using NUnit.Framework;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public TMPro.TextMeshProUGUI score;
+    public TMPro.TextMeshProUGUI timeDisplay;
 
     [SerializeField]
     public Sprite[] documentIcons;
@@ -117,6 +119,12 @@ public class UIManager : MonoBehaviour
     {
         score.text = player.points.ToString();
     }
+
+    public void updateTime(int time)
+    {
+        timeDisplay.text = math.clamp(time, 0, 10000).ToString();
+    }
+
 
     public void endLevelUI(int ordersCompleted)
     {

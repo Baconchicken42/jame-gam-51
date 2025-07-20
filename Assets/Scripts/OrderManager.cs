@@ -13,7 +13,6 @@ public class OrderManager : MonoBehaviour
     private int ordersCompleted = 0;
 
     private Player player;
-    private UIManager uiManager;
 
 
     private void Start()
@@ -25,7 +24,6 @@ public class OrderManager : MonoBehaviour
         }
 
         player = FindAnyObjectByType<Player>();
-        uiManager = FindAnyObjectByType<UIManager>();
     }
 
     private void OnDestroy()
@@ -39,6 +37,7 @@ public class OrderManager : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
+        player.uiManager.updateTime(Mathf.RoundToInt(timeLimitSeconds - timer));
 
         if (timer >= timeLimitSeconds)
         {
@@ -75,7 +74,7 @@ public class OrderManager : MonoBehaviour
         player.interactAction.action.Disable();
         player.moveSelectionAction.action.Disable();
 
-        uiManager.endLevelUI(ordersCompleted);
+        player.uiManager.endLevelUI(ordersCompleted);
     }
 
 }
