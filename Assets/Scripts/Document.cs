@@ -1,13 +1,16 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Document : Pickup
 {
     public UnityEvent onCompleted;
 
+    [Header("References")]
     public GameObject copy;
 
+    [Header("Settings")]
     [Min(0)]
     public float progress = 0;
     [Min(0)]

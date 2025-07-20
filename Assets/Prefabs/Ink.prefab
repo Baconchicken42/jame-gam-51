@@ -74,6 +74,7 @@ MonoBehaviour:
   onDropped:
     m_PersistentCalls:
       m_Calls: []
+  icon: {fileID: 21300000, guid: f9034392aa06da9429f87d8165b8367c, type: 3}
   inkAmount: 50
 --- !u!65 &7911345504861963470
 BoxCollider:
