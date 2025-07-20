@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public TMPro.TextMeshProUGUI score;
+
     [SerializeField]
     public Sprite[] documentIcons;
 
@@ -72,16 +74,16 @@ public class UIManager : MonoBehaviour
             if (playerInv[i])
             {
                 inventoryImgs[i].sprite = playerInv[i].icon;
-                Color newColor = inventoryImgs[i].color;
-                newColor.a = 1; //why doesn't it just let you modify the color directly? who knows
-                inventoryImgs[i].color = newColor;
+                //Color newColor = inventoryImgs[i].color;
+                //newColor.a = 1; //why doesn't it just let you modify the color directly? who knows
+                //inventoryImgs[i].color = newColor;
             }
             else
             {
                 inventoryImgs[i].sprite = null;
-                Color newColor = inventoryImgs[i].color;
-                newColor.a = 0;
-                inventoryImgs[i].color = newColor;
+                //Color newColor = inventoryImgs[i].color;
+                //newColor.a = 0;
+                //inventoryImgs[i].color = newColor;
             }
         }
 
@@ -96,5 +98,10 @@ public class UIManager : MonoBehaviour
                 inventoryImgs[i].transform.parent.DOScale(new Vector3(1, 1, 1), .5f);
             }
         }
+    }
+
+    public void refreshScoreUI()
+    {
+        score.text = player.points.ToString();
     }
 }

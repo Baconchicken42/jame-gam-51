@@ -31,7 +31,8 @@ public class Player : MonoBehaviour
     private Pickup[] inventory;
     [HideInInspector]
     public int selectedPickup = 0;
-    private float points = 0f;
+    [HideInInspector]
+    public float points = 0f;
 
 
     void Start()
@@ -191,9 +192,9 @@ public class Player : MonoBehaviour
 
         //clean up inventory
         inventory[selectedPickup] = null;
-        uiManager.refreshInventoryUI();
 
         displaySelectedPickup();
+        uiManager.refreshInventoryUI();
     }
 
     private int getFirstEmptyInventorySlot()
@@ -275,11 +276,13 @@ public class Player : MonoBehaviour
             ret = inventory[selectedPickup];
             inventory[selectedPickup] = null;
             displaySelectedPickup();
+            uiManager.refreshInventoryUI();
             return ret;
         }
         else
         {
             Debug.Log("Nothing is currently being held.");
+            uiManager.refreshInventoryUI();
             return null;
         }
 
@@ -288,6 +291,7 @@ public class Player : MonoBehaviour
     public void addPoints(float p)
     {
         points += p;
+        uiManager.refreshScoreUI();
     }
 
     private void debugInventoryContents()

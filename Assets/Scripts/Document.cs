@@ -19,14 +19,17 @@ public class Document : Pickup
 
     [HideInInspector]
     public bool isCompleted = false;
+    [HideInInspector]
+    public UIManager uiManager;
 
     public override void Start() 
     {
         base.Start();
 
-        UIManager uiManager = FindObjectsByType<UIManager>(FindObjectsSortMode.InstanceID)[0];
+        uiManager = FindObjectsByType<UIManager>(FindObjectsSortMode.InstanceID)[0];
 
         icon = uiManager.getMatchingIcon(color, type);
+        uiManager.refreshInventoryUI();
     }
 
     public void complete()

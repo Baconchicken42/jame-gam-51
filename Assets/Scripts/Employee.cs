@@ -47,7 +47,7 @@ public class Employee : Interactible
             //documentDispensed = false;
             onOrderCompleted.Invoke();
 
-            float points = Random.Range(0, 12);
+            float points = Random.Range(1, 1);
             player.addPoints(points / 100f);
         }
         else if (orders.Count > 0 && player.isInventorySlotAvailable()) //if player doesn't have a valid doc, an order exists, and the player has room for it:
