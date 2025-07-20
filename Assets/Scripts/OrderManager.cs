@@ -49,11 +49,7 @@ public class OrderManager : MonoBehaviour
                     if (employees[i].id == orders[j].employeeID)
                     {
                         //not really sure if this will pass by reference or not so making a duplicate just to be certain
-                        employees[i].orders.Add(new Order(orders[j].employeeID, orders[j].color, orders[j].type, orders[j].timeRequired, orders[j].activationTimeSeconds));
-                        foreach (Order item in employees[i].orders)
-                        {
-                            Debug.Log(item.type);
-                        }
+                        employees[i].addOrder(new Order(orders[j].employeeID, orders[j].color, orders[j].type, orders[j].timeRequired, orders[j].activationTimeSeconds));
                         orders[j].wasDispensed = true;
                         Debug.Log($"Order was dispensed to Employee {employees[i].id}");
                     }

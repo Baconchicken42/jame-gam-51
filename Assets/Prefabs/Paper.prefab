@@ -201,6 +201,7 @@ MonoBehaviour:
   onDropped:
     m_PersistentCalls:
       m_Calls: []
+  icon: {fileID: 21300000, guid: 665f45e704d9ad44f8513b9a2e677b3d, type: 3}
   paperAmount: 25
 --- !u!65 &5289442839629640052
 BoxCollider:

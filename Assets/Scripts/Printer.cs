@@ -1,13 +1,16 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Printer : Interactible
 {
     public UnityEvent onJobCompleted;
 
+    [Header("References")]
     public Transform documentAnchor;
 
+    [Header("Settings")]
     [Range(0,40)]
     public int inkRemaining = 40;
     [Range(0,10)]
@@ -15,10 +18,39 @@ public class Printer : Interactible
     public float inkTickRateSeconds = 1f;
     public float paperTickRateSeconds = 5f;
 
-    
+
+
+    [Header("UI")]
+    //public Canvas uiCanvas;
+    //private Camera mainCamera;
+    public Image inkImg;
+    public Image inkWarning;
+    public Image inkEmpty;
+    private bool isInkIconOut = false;
+    public Image paperImg;
+    public Image paperWarning;
+    public Image paperEmpty;
+    private bool isPaperIconOut = false;
+    public Image docImg;
+    public Image docCheck;
+    public float iconAppearTimeSeconds = .3f;
+
+
     private Document currentDocument { get; set; }
     private float inkTimer = 0f;
     private float paperTimer = 0f;
+
+    public override void Start()
+    {
+        base.Start();
+
+        inkImg.transform.localScale = Vector3.zero;
+        paperImg.transform.localScale = Vector3.zero;
+        docImg.transform.localScale = Vector3.zero;
+
+        //mainCamera = FindAnyObjectByType<Camera>();
+
+    }
 
     public override void interact()
     {
@@ -49,6 +81,8 @@ public class Printer : Interactible
                 currentDocument.transform.SetParent(documentAnchor);
                 currentDocument.transform.DOLocalMove(documentAnchor.localPosition, player.pickupAnimDuration);
                 currentDocument.transform.DOLocalRotate(documentAnchor.localEulerAngles, player.pickupAnimDuration);
+                docImg.sprite = currentDocument.icon;
+                docImg.transform.DOScale(Vector3.one, iconAppearTimeSeconds);
                 return;
             }
         }
@@ -78,6 +112,7 @@ public class Printer : Interactible
                 if (currentDocument.progress >= currentDocument.timeRequired) //if document is finished
                 {
                     currentDocument.complete();
+                    docCheck.gameObject.SetActive(true);
                     onJobCompleted.Invoke();
                 }
                 else
@@ -99,19 +134,48 @@ public class Printer : Interactible
                     }
                 }
             }
-            else
-            {
-                //TODO: update UI to show that ink and/or paper are needed
-            }
 
         }
-        
-    }
 
 
-    public void grabHeldPickup()
-    {
-        
+        if (inkRemaining < 15 && inkRemaining > 0 && !isInkIconOut)
+        {
+            inkEmpty.gameObject.SetActive(false);
+            inkWarning.gameObject.SetActive(true);
+            inkImg.transform.DOScale(Vector3.one, iconAppearTimeSeconds);
+            isInkIconOut = true;
+        }
+        else if (inkRemaining == 0)
+        {
+            inkWarning.gameObject.SetActive(false);
+            inkEmpty.gameObject.SetActive(true);
+        }
+        else if (isInkIconOut)
+        {
+            inkImg.transform.DOScale(Vector3.zero, iconAppearTimeSeconds);
+            isInkIconOut = false;
+        }
+
+        if (paperRemaining < 3 && paperRemaining > 0 && !isPaperIconOut)
+        {
+            paperEmpty.gameObject.SetActive(false);
+            paperWarning.gameObject.SetActive(true);
+            paperImg.transform.DOScale(Vector3.one, iconAppearTimeSeconds);
+            isPaperIconOut = true;
+        }
+        else if (paperRemaining == 0)
+        {
+            paperWarning.gameObject.SetActive(false);
+            paperEmpty.gameObject.SetActive(true);
+        }
+        else if (isInkIconOut)
+        {
+            paperImg.transform.DOScale(Vector3.zero, iconAppearTimeSeconds);
+            isPaperIconOut = false;
+        }
+
+
+        //uiCanvas.transform.eulerAngles = Vector3.RotateTowards(uiCanvas.transform.eulerAngles, mainCamera.transform.position, 1, 0);
     }
 
     private void releaseCurrentDocument()
@@ -119,7 +183,11 @@ public class Printer : Interactible
         if (currentDocument)
         {
             if (player.grabPickup(currentDocument)) //try to make the player grab document, and if successful clear reference
+            {  
                 currentDocument = null;
+                docImg.transform.DOScale(Vector3.zero, iconAppearTimeSeconds);
+                docCheck.gameObject.SetActive(false);
+            }
         }
            
     }

@@ -4,21 +4,34 @@ using UnityEditor;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Employee : Interactible
 {
     public UnityEvent onOrderCompleted;
 
-
+    [Header("References")]
     public GameObject documentPrefab;
     public Transform documentAnchor;
 
+    [Header("Settings")]
     public int id = 0;
     //[HideInInspector]
     public List<Order> orders;
 
-    //private bool documentDispensed = false;
+    [Header("UI")]
+    public RectTransform groupRectTransform;
+    public Image docImgTemplate;
+    private List<Image> docImgs;
+    private UIManager uiManager;
+
+    public override void Start()
+    {
+        base.Start();
+
+        uiManager = FindAnyObjectByType<UIManager>();
+        docImgs = new List<Image>();
+    }
 
     public override void interact()
     {
@@ -43,11 +56,15 @@ public class Employee : Interactible
             {
                 Destroy(heldDoc.gameObject);
             });
+
+            Image linkedImg = docImgs[orders.IndexOf(matchedOrder)];
+            docImgs.Remove(linkedImg);
+            Destroy(linkedImg.gameObject);
+
             orders.Remove(matchedOrder);
-            //documentDispensed = false;
             onOrderCompleted.Invoke();
 
-            float points = Random.Range(0, 12);
+            float points = Random.Range(1, 1);
             player.addPoints(points / 100f);
         }
         else if (orders.Count > 0 && player.isInventorySlotAvailable()) //if player doesn't have a valid doc, an order exists, and the player has room for it:
@@ -62,10 +79,24 @@ public class Employee : Interactible
             newDocComponentReference.type = nextOrder.type;
             newDocComponentReference.color = nextOrder.color;
 
+            Color newColor = docImgs[orders.IndexOf(nextOrder)].color;
+            newColor.a = 0.3f;
+            docImgs[orders.IndexOf(nextOrder)].color = newColor;
+
             player.grabPickup(newDocComponentReference);
             nextOrder.wasDispensed = true;
         }
         
+    }
+
+    public void addOrder(Order newOrder)
+    {
+        orders.Add(newOrder);
+        GameObject docImgElement = Instantiate(docImgTemplate.gameObject, groupRectTransform);
+        docImgElement.SetActive(true);
+        Image newDocImg = docImgElement.GetComponent<Image>();
+        newDocImg.sprite = uiManager.getMatchingIcon(newOrder.color, newOrder.type);
+        docImgs.Add(newDocImg);
     }
 
 
