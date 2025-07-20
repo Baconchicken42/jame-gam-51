@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public GameObject playerModel;
     public Transform pickupAnchor;
     public UIManager uiManager;
+    public Rigidbody rb;
 
     public float movementSpeed = 10.0f;
     public float sprintMultiplier = 1.75f;
@@ -52,6 +53,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        rb.linearVelocity = Vector3.zero;
+
         //handle movement
         Vector2 moveAxis = (sprintAction.action.IsPressed()) ? moveAction.action.ReadValue<Vector2>() * sprintMultiplier : moveAction.action.ReadValue<Vector2>();
         Vector3 moveDir = new Vector3(moveAxis.x, 0, moveAxis.y);
