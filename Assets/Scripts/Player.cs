@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 
     public GameObject playerModel;
     public Transform pickupAnchor;
+    public UIManager uiManager;
 
     public float movementSpeed = 10.0f;
     public float sprintMultiplier = 1.75f;
@@ -28,7 +29,8 @@ public class Player : MonoBehaviour
     //private Interactible interactibleInRange = null;
     private Interactible focusedInteractible;
     private Pickup[] inventory;
-    private int selectedPickup = 0;
+    [HideInInspector]
+    public int selectedPickup = 0;
     private float points = 0f;
 
 
@@ -40,6 +42,11 @@ public class Player : MonoBehaviour
         moveSelectionAction.action.Enable();
 
         inventory = new Pickup[inventorySize];
+
+        if (!uiManager)
+        {
+            uiManager = FindObjectsByType<UIManager>(FindObjectsSortMode.InstanceID)[0];
+        }
     }
 
     void Update()
@@ -125,6 +132,7 @@ public class Player : MonoBehaviour
         displaySelectedPickup();
 
         Debug.Log("grabbed " + pickup.name);
+        uiManager.refreshInventoryUI();
         //debugInventoryContents();
 
         return true;
@@ -183,6 +191,7 @@ public class Player : MonoBehaviour
 
         //clean up inventory
         inventory[selectedPickup] = null;
+        uiManager.refreshInventoryUI();
 
         displaySelectedPickup();
     }
@@ -218,6 +227,7 @@ public class Player : MonoBehaviour
             selectedPickup++;
 
         displaySelectedPickup();
+        uiManager.refreshInventoryUI();
     }
 
     private void moveSelectionLeft()
@@ -228,6 +238,7 @@ public class Player : MonoBehaviour
             selectedPickup--;
 
         displaySelectedPickup();
+        uiManager.refreshInventoryUI();
     }
 
     private void displaySelectedPickup()
@@ -247,6 +258,11 @@ public class Player : MonoBehaviour
     public Pickup getSelectedPickup()
     {
         return inventory[selectedPickup];
+    }
+
+    public Pickup[] getInventory()
+    {
+        return inventory;
     }
 
     public Pickup releaseHeldPickup()

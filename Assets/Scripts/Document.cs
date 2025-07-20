@@ -20,6 +20,15 @@ public class Document : Pickup
     [HideInInspector]
     public bool isCompleted = false;
 
+    public override void Start() 
+    {
+        base.Start();
+
+        UIManager uiManager = FindObjectsByType<UIManager>(FindObjectsSortMode.InstanceID)[0];
+
+        icon = uiManager.getMatchingIcon(color, type);
+    }
+
     public void complete()
     {
         copy.gameObject.SetActive(true);

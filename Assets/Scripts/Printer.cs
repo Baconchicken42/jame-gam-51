@@ -108,12 +108,6 @@ public class Printer : Interactible
         
     }
 
-
-    public void grabHeldPickup()
-    {
-        
-    }
-
     private void releaseCurrentDocument()
     {
         if (currentDocument)

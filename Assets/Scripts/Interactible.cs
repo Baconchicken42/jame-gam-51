@@ -12,7 +12,7 @@ public class Interactible : MonoBehaviour
     protected Player player;
 
 
-    private void Start()
+    public virtual void Start()
     {
         outlines = GetComponentsInChildren<Outline>();
         removeHighlight();
