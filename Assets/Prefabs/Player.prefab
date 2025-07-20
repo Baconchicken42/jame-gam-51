@@ -53,12 +53,16 @@ MonoBehaviour:
   moveSelectionAction: {fileID: -12064302935708426, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   playerModel: {fileID: 5797068576677053507}
   pickupAnchor: {fileID: 1581177752837968978}
+  uiManager: {fileID: 0}
+  rb: {fileID: 7416878499045131088}
   movementSpeed: 3.5
   sprintMultiplier: 1.75
   rotationStep: 0.1
   interactRange: 1
   pickupAnimDuration: 0.3
   inventorySize: 3
+  selectedPickup: 0
+  points: 0
 --- !u!54 &7416878499045131088
 Rigidbody:
   m_ObjectHideFlags: 0
