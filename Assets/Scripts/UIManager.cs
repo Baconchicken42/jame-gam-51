@@ -74,16 +74,16 @@ public class UIManager : MonoBehaviour
             if (playerInv[i])
             {
                 inventoryImgs[i].sprite = playerInv[i].icon;
-                //Color newColor = inventoryImgs[i].color;
-                //newColor.a = 1; //why doesn't it just let you modify the color directly? who knows
-                //inventoryImgs[i].color = newColor;
+                Color newColor = inventoryImgs[i].color;
+                newColor.a = 1; //why doesn't it just let you modify the color directly? who knows
+                inventoryImgs[i].color = newColor;
             }
             else
             {
                 inventoryImgs[i].sprite = null;
-                //Color newColor = inventoryImgs[i].color;
-                //newColor.a = 0;
-                //inventoryImgs[i].color = newColor;
+                Color newColor = inventoryImgs[i].color;
+                newColor.a = 0;
+                inventoryImgs[i].color = newColor;
             }
         }
 
