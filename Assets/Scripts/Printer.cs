@@ -9,6 +9,7 @@ public class Printer : Interactible
 
     [Header("References")]
     public Transform documentAnchor;
+    public SetEmissiveColor colorChanger;
 
     [Header("Settings")]
     [Range(0,40)]
@@ -105,6 +106,8 @@ public class Printer : Interactible
 
     private void Update()
     {
+        colorChanger.SetDefault();
+
         if (currentDocument)
         {
             if (inkRemaining > 0 && paperRemaining > 0 && !currentDocument.isCompleted)
@@ -113,6 +116,7 @@ public class Printer : Interactible
                 {
                     currentDocument.complete();
                     docCheck.gameObject.SetActive(true);
+                    colorChanger.SetSuccess();
                     onJobCompleted.Invoke();
                 }
                 else
@@ -149,6 +153,7 @@ public class Printer : Interactible
         {
             inkWarning.gameObject.SetActive(false);
             inkEmpty.gameObject.SetActive(true);
+            colorChanger.SetFail();
         }
         else if (isInkIconOut)
         {
@@ -167,6 +172,7 @@ public class Printer : Interactible
         {
             paperWarning.gameObject.SetActive(false);
             paperEmpty.gameObject.SetActive(true);
+            colorChanger.SetFail();
         }
         else if (isInkIconOut)
         {

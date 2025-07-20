@@ -377,6 +377,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   documentAnchor: {fileID: 7796434602807249492}
+  colorChanger: {fileID: 365742418586381482}
   inkRemaining: 40
   paperRemaining: 10
   inkTickRateSeconds: 1
@@ -1040,6 +1041,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7515495234547608758}
   m_SourcePrefab: {fileID: 100100000, guid: 683fa96a2699edf4f894f0c948b8ca72, type: 3}
+--- !u!114 &365742418586381482 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 502133261314363811, guid: 683fa96a2699edf4f894f0c948b8ca72, type: 3}
+  m_PrefabInstance: {fileID: 280506585429523721}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6695622595842085377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e61166e749e1b3e4193edfceb1067235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6695622595842085377 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6849744163480547080, guid: 683fa96a2699edf4f894f0c948b8ca72, type: 3}
